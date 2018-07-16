@@ -15,6 +15,7 @@ public class CameraControl : MonoBehaviour
     private float currentY = 45.0f;
     private float sensitivityX = 4.0f;
     private float sensitivityY = 1.0f;
+	public float panSpeed = 30f;
 
     private void Start()
     {
@@ -35,5 +36,6 @@ public class CameraControl : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
         camTransform.position = lookAt.position + rotation * dir;
         camTransform.LookAt(lookAt.position);
+
     }
 }
