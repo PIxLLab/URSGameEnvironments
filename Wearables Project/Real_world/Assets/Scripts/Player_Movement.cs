@@ -25,6 +25,8 @@ public class Player_Movement : MonoBehaviour {
 		movement *= Time.deltaTime;//ensures the speed the player moves does not change based on frame rate
 		movement = transform.TransformDirection (movement);
 		_charCont.Move (movement);
+
+		Player_Stats.Score += 100;
 	}
 
 }
