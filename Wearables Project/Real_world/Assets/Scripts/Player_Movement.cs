@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Player_Movement : MonoBehaviour {
@@ -8,6 +9,8 @@ public class Player_Movement : MonoBehaviour {
 	public float gravity = -9.8f;
 
 	private CharacterController _charCont;
+
+    public Image batteryBar;
 		
 
 	// Use this for initialization

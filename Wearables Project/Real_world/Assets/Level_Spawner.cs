@@ -7,8 +7,11 @@ public class Level_Spawner : MonoBehaviour {
 
 	//public Transform CluePrefab;
 	public float timeBetweenLevel = 120f; 
-	private float countdown = 60f;
+	private float countdown = 5f;
 	public Text timerText;
+    public GameObject GameStatsUI;
+    public Image batteryBar;
+    public Slider battery;
 
 	void Update()
 	{
@@ -18,6 +21,8 @@ public class Level_Spawner : MonoBehaviour {
 		}
 
 		countdown -= Time.deltaTime;
+        batteryBar.fillAmount -= 0.01f * Time.deltaTime;
+        battery.value -= 0.01f * Time.deltaTime;
 		countdown = Mathf.Clamp (countdown, 0f, Mathf.Infinity);
 		float minutes = Mathf.Floor(countdown / 60);
 		float seconds = countdown%60;
@@ -28,6 +33,9 @@ public class Level_Spawner : MonoBehaviour {
 	void NewLevel()
 	{
 		Debug.Log ("New Level");
+        GameStatsUI.SetActive(true);
+        batteryBar.fillAmount = 1.0f;
+        battery.value = 1.0f;
 	}
 
 }
