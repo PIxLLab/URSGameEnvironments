@@ -10,8 +10,11 @@ public class Level_Spawner : MonoBehaviour {
 	private float countdown = 5f;
 	public Text timerText;
     public GameObject GameStatsUI;
+    public Text ProgressText;
     public Image batteryBar;
     public Slider battery;
+    public float progress;
+
 
 	void Update()
 	{
@@ -21,12 +24,18 @@ public class Level_Spawner : MonoBehaviour {
 		}
 
 		countdown -= Time.deltaTime;
+
+        countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
+        float minutes = Mathf.Floor(countdown / 60);
+        float seconds = countdown % 60;
+        timerText.text = minutes + ":" + Mathf.RoundToInt(seconds);
+
         batteryBar.fillAmount -= 0.01f * Time.deltaTime;
+	
         battery.value -= 0.01f * Time.deltaTime;
-		countdown = Mathf.Clamp (countdown, 0f, Mathf.Infinity);
-		float minutes = Mathf.Floor(countdown / 60);
-		float seconds = countdown%60;
-		timerText.text = minutes + ":" + Mathf.RoundToInt (seconds);
+        progress = battery.value * 100f;
+        progress = Mathf.Clamp(progress, 0f, 100f);
+        ProgressText.text = Mathf.Floor(progress) + "%";
 		//timerText.text = string.Format("{00:00.00}", countdown);
 	}
 
