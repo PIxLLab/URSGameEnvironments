@@ -27,8 +27,8 @@ ExportedObj/
 *.booproj
 *.apk
 *.unitypackage
-*.pidb.meta
-*.meta
+# *.pidb.meta
+# *.meta
 
 # ============ #
 # OS generated #
