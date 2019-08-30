@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>config.xml</name>
+	<Number_of_drones>2</Number_of_drones>
+	<KML_File_Path>@"C:\Users\User\Desktop\newdz.kml"</KML_File_Path>
+	<Set_Up>
+		<network>ws://spitfire.cs.nmsu.edu</network>
+		<port>9090</port>
+	</Set_Up>
+	<Message_Topic>
+		<Topic>/uav0/ground_truth_to_tf/pose</Topic> 
+		<Topic>/uav1/ground_truth_to_tf/pose</Topic>
+		<Topic>/uav2/ground_truth_to_tf/pose</Topic>
+		<Topic>/uav3/ground_truth_to_tf/pose</Topic>
+	</Message_Topic>
+	<Set_Coordinates>
+		<originx>-106.75239801428688</originx> 
+		<originy>32.2810102009863</originy>
+		<n_x_scale>94981.653531</n_x_scale> 
+		<p_x_scale>94981.653531</p_x_scale>
+		<y_scale>107556.326828</y_scale> 
+	</Set_Coordinates>
+	<Clues>
+		<clue>Clue'1':3</clue> 
+		<clue>Clue'2':3</clue>
+	</Clues>	
+	<Human_Clues>
+		<Hclue>Clue '3':1</Hclue> 
+		<Hclue>Clue '4':1</Hclue>
+	</Human_Clues>
+		
+	
+			
+</Document>
+</xml>
