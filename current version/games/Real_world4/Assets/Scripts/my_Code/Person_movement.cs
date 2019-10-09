@@ -29,6 +29,9 @@ public class Person_movement : MonoBehaviour {
     public static bool playerpointadditionbool;
     public static bool playerpointdeductionbool;
     int stop = 0;int treasurefound; int checkcollision; int checkhdz; bool clue;
+	public string[] visitedBuildings = new string[50];
+	public int buildingPos = 0;
+	public bool newBuilding = false;
 
     void Start () {
 
@@ -126,6 +129,8 @@ public class Person_movement : MonoBehaviour {
         if (collision.gameObject.tag=="building")  // or if(gameObject.CompareTag("YourWallTag"))
         {
             clue = false;
+			newBuilding = true;
+
             ++checkcollision;
             
             rb.velocity = Vector3.zero;
@@ -136,6 +141,16 @@ public class Person_movement : MonoBehaviour {
             bound_x2 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.x + collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.x)*-1;
             bound_z1 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.z - collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.z)*-1;
             bound_z2 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.z + collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.z)*-1;
+
+			Debug.Log(collision.gameObject.GetComponent<Text> ().text);
+
+			for (int i = 0; i < (buildingPos + 1); i++) 
+			{
+				if (visitedBuildings [i] == collision.gameObject.GetComponent<Text> ().text) 
+				{
+					newBuilding = false;
+				}
+			}
 
             foreach (GameObject hc in hcs)
             {
@@ -175,12 +190,15 @@ public class Person_movement : MonoBehaviour {
 
                             playerpointaddition = sb.ToString();
                             playerpointadditionbool = true;
+
+							visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
                         }
 
                     }
                     else
-                    {
-                        if (foundclues.Count(x => x == Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"))) == 0)
+					{
+
+						if ((foundclues.Count(x => x == Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"))) == 0) && newBuilding == true)
                         {
                             clue = true;
                             // Debug.Log("here in the clue");
@@ -210,9 +228,10 @@ public class Person_movement : MonoBehaviour {
                                 playerpointaddition = sb.ToString();
                                 playerpointadditionbool = true;
 
-                            }
+								visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
 
-                            else
+                            }
+							else if(newBuilding == true)
                             {
                                 clue = true;
                                 GameObject.Find("Clues").GetComponent<Text>().text = GameObject.Find("Clues").GetComponent<Text>().text + ", " + hc.GetComponent<Text>().text.Substring(hc.GetComponent<Text>().text.LastIndexOf(':') + 1);
@@ -235,6 +254,8 @@ public class Person_movement : MonoBehaviour {
 
                                 playerpointaddition = sb.ToString();
                                 playerpointadditionbool = true;
+
+								visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
                             }
                         }
                     }
@@ -242,33 +263,35 @@ public class Person_movement : MonoBehaviour {
                 }
             }
                 
-                    if (checkcollision == 1 && clue==false)
-                    {
-                       // Debug.Log("here out the clue");
-                        // Debug.Log("Entered");
-                        playerpointadditionbool = true;
-                        MyDetail md3 = new MyDetail();
+			if (checkcollision == 1 && clue==false && newBuilding == true)
+            {
+               // Debug.Log("here out the clue");
+                // Debug.Log("Entered");
+                playerpointadditionbool = true;
+                MyDetail md3 = new MyDetail();
 
-				        md3.player_id = Convert.ToInt32(ros2.playerid);
-                        md3.point = -2;
-                        //   md.topic = "/w_ddzcoordinates";
+		        md3.player_id = Convert.ToInt32(ros2.playerid);
+                md3.point = -2;
+                //   md.topic = "/w_ddzcoordinates";
 
-				        score = score - 2;
+		        score = score - 2;
 
-                        StringBuilder sb = new StringBuilder();
-                        using (StringWriter sw = new StringWriter(sb))
-                        using (JsonTextWriter writer = new JsonTextWriter(sw))
-                        {
-                            writer.QuoteChar = '\'';
+                StringBuilder sb = new StringBuilder();
+                using (StringWriter sw = new StringWriter(sb))
+                using (JsonTextWriter writer = new JsonTextWriter(sw))
+                {
+                    writer.QuoteChar = '\'';
 
-                            JsonSerializer ser = new JsonSerializer();
-                            ser.Serialize(writer, md3);
-                        }
-
-                        playerpointaddition = sb.ToString();
-
-                    }
+                    JsonSerializer ser = new JsonSerializer();
+                    ser.Serialize(writer, md3);
                 }
+
+                playerpointaddition = sb.ToString();
+				visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+
+            }
+				
+        }
 
 		Debug.Log ("A collision, the score is: " + score);
                 

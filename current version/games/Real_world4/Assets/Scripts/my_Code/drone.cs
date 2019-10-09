@@ -617,6 +617,9 @@ public class drone : MonoBehaviour {
             }
             else
             {
+				// For the purposes of testing, I'm going to comment out everything that happens if the rb.transform.position.y >= 20 -- MC
+
+				/* 
                 // dccoordinations = "Drone Clue: longitude: " + movx.ToString() + " " + " latitude: " + " " + movy.ToString() + " Value: NON ";
                 MyDetail md = new MyDetail();
                 md.latitude = movy;
@@ -637,39 +640,46 @@ public class drone : MonoBehaviour {
                 }
 
                 dccoordinations = sb.ToString();
+				*/
             }
         }
 
-            if (other.gameObject.CompareTag("hc") )
+        if (other.gameObject.CompareTag("hc") )
         {
             hcpublisher = true;
-          //  txt2.text = "Collision detected in hc ";
+            //  txt2.text = "Collision detected in hc ";
             movx = (other.transform.position.x / game_mec.n_x_scale) + game_mec.oriiginx;
             movy = (other.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
 
-          //  hccoordinations = "Human Clue: longitude: " + movx.ToString() + " " + " latitude: " + " " + movy.ToString() + " altitude: " + " " + rb.transform.position.y.ToString();
-            MyDetail md = new MyDetail();
-            md.latitude = movy;
-            md.longitude = movx;
-            
-            md.player_id = Convert.ToInt32(ros2.playerid);
-            md.drone_clue_id = Convert.ToInt32(getBetween(other.GetComponent<Text>().text, "\'", "\'"));
-            //   md.topic= "/w_hccoordinates";
-            // md.drone_clue_value = other.GetComponent<Text>().text;
+			// This if-statement added to test drone-ineligibility of finding clues when rb.transform.position.y >= 20  --MC
 
-            StringBuilder sb = new StringBuilder();
-            using (StringWriter sw = new StringWriter(sb))
-            using (JsonTextWriter writer = new JsonTextWriter(sw))
-            {
-                writer.QuoteChar = '\'';
+			if (rb.transform.position.y < 20) 
+			{
+				movx = (other.transform.position.x / game_mec.n_x_scale) + game_mec.oriiginx;
+				movy = (other.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
 
-                JsonSerializer ser = new JsonSerializer();
-                ser.Serialize(writer, md);
-            }
+				//  hccoordinations = "Human Clue: longitude: " + movx.ToString() + " " + " latitude: " + " " + movy.ToString() + " altitude: " + " " + rb.transform.position.y.ToString();
+				MyDetail md = new MyDetail ();
+				md.latitude = movy;
+				md.longitude = movx;
 
-            hccoordinations = sb.ToString();
+				md.player_id = Convert.ToInt32 (ros2.playerid);
+				md.drone_clue_id = Convert.ToInt32 (getBetween (other.GetComponent<Text> ().text, "\'", "\'"));
+				//   md.topic= "/w_hccoordinates";
+				// md.drone_clue_value = other.GetComponent<Text>().text;
 
-        }
+				StringBuilder sb = new StringBuilder ();
+				using (StringWriter sw = new StringWriter (sb))
+				using (JsonTextWriter writer = new JsonTextWriter (sw)) {
+					writer.QuoteChar = '\'';
+
+					JsonSerializer ser = new JsonSerializer ();
+					ser.Serialize (writer, md);
+				}
+
+				hccoordinations = sb.ToString ();
+			 }
+         }
     }
 
     private void OnTriggerStay(Collider other)
