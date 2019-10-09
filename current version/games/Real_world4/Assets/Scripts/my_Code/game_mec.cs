@@ -143,22 +143,31 @@ public class game_mec : MonoBehaviour
 
 					GameObject[]dc=new GameObject[dclength];int dronecluecounter=0;
                    
-					longi = float.Parse(array[0], format);
-					lat = float.Parse(array[1], format);
+					for (int i = 8; i < singlevector.Length-8; ++i)
+					{
+						array = singlevector[i].Split(',');
 
-					longid = longi;
-					latd = lat;
 
-					longid = (longid - oriiginx) * n_x_scale;
-					latd = (latd - oriiginy) * y_scale;
+						longi = float.Parse(array[0], format);
 
-					result = new Vector3((float)longid, (float)11, (float)latd);
 
-                    dc[dronecluecounter] = Instantiate(Resources.Load("DC"), result, Quaternion.Euler(90, 0, 0)) as GameObject;
-                    dc[dronecluecounter].AddComponent<Text>();
-                    dc[dronecluecounter].GetComponent<Text>().text = clues[counter2];
-                    dc[dronecluecounter].tag = "dc";
-                    dronecluecounter++;
+						lat = float.Parse(array[1], format);
+
+						longid = longi;
+						latd = lat;
+
+						longid = (longid - oriiginx) * n_x_scale;
+						latd = (latd - oriiginy) * y_scale;
+
+
+						result = new Vector3((float)longid, (float)16, (float)latd);
+
+						dc[dronecluecounter] = Instantiate(Resources.Load("DC"), result, Quaternion.Euler(90, 0, 0)) as GameObject;
+						dc[dronecluecounter].AddComponent<Text>();
+						dc[dronecluecounter].GetComponent<Text>().text = clues[counter2];
+						dc[dronecluecounter].tag = "dc";
+						dronecluecounter++;
+					}
 				
                     ++counter2;
 
@@ -294,26 +303,35 @@ public class game_mec : MonoBehaviour
 					double longid; double latd; int dclength = singlevector.Length - 16;
 					GameObject[]hc=new GameObject[dclength];int dronecluecounter=0;
 
-					longi = float.Parse(array[0], format);
+					for (int i = 8; i < singlevector.Length-8; ++i)
+					{
+						array = singlevector[i].Split(',');
 
 
-					lat = float.Parse(array[1], format);
-
-					longid = longi;
-					latd = lat;
-
-					longid = (longid - oriiginx) * n_x_scale;
-					latd = (latd - oriiginy) * y_scale;
+						longi = float.Parse(array[0], format);
 
 
-					result = new Vector3((float)longid, (float)11, (float)latd);
-					hc[dronecluecounter] = Instantiate(Resources.Load("HC"), result, Quaternion.Euler(90, 0, 0)) as GameObject;
+						lat = float.Parse(array[1], format);
+
+						longid = longi;
+						latd = lat;
+
+						longid = (longid - oriiginx) * n_x_scale;
+						latd = (latd - oriiginy) * y_scale;
 
 
-					hc[dronecluecounter].AddComponent<Text>();
-					hc[dronecluecounter].GetComponent<Text>().text = Hclues[hcounter2];
-					hc[dronecluecounter].tag = "hc";
-					dronecluecounter++;
+						result = new Vector3((float)longid, (float)25, (float)latd);
+
+						hc[dronecluecounter] = Instantiate(Resources.Load("HC"), result, Quaternion.Euler(90, 0, 0)) as GameObject;
+
+
+						hc[dronecluecounter].AddComponent<Text>();
+						hc[dronecluecounter].GetComponent<Text>().text = Hclues[hcounter2];
+						hc[dronecluecounter].tag = "hc";
+						dronecluecounter++;
+
+
+					}
 
 					++hcounter2;
 
