@@ -15,31 +15,68 @@ namespace Assets.Scripts.my_Code
         //}
         //public string type = "std_msgs/String";
 
-        public double longitude
-        {
-            get;
-            set;
-        }
-        public double latitude
-        {
-            get;
-            set;
-        }
+		public double longitude
+		{
+			get;
+			set;
+		}
 
-        
-        public int player_id
-        {
-            get;
-            set;
-        }
-        public int point
-        {
-            get;
-            set;
-        }
-       
+		public double latitude
+		{
+			get;
+			set;
+		}
 
 
+		public int player_id
+		{
+			get;
+			set;
+		}
 
-    }
+		public int point
+		{
+			get;
+			set;
+		}
+
+		public int drone_clue_id
+		{
+			get;
+			set;
+		}
+
+		/*
+		public int building_number
+		{
+			get;
+			set;
+		}
+
+		public int drone_clue_value
+		{
+			get;
+			set;
+		}
+
+		public int drone_id
+		{
+			get;
+			set;
+		}
+
+		public int drone_clue_id
+		{
+			get;
+			set;
+		}
+
+		public int battery_value
+		{
+			get;
+			set;
+		}
+		*/
+	}
 }
+

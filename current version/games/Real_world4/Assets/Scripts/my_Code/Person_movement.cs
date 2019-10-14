@@ -142,7 +142,7 @@ public class Person_movement : MonoBehaviour {
             bound_z1 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.z - collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.z)*-1;
             bound_z2 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.z + collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.z)*-1;
 
-			Debug.Log(collision.gameObject.GetComponent<Text> ().text);
+			// Debug.Log(collision.gameObject.GetComponent<Text> ().text);
 
 			for (int i = 0; i < (buildingPos + 1); i++) 
 			{
@@ -211,7 +211,8 @@ public class Person_movement : MonoBehaviour {
 
 								md3.player_id = Convert.ToInt32(ros2.playerid);
                                 md3.point = 10;
-                                //   md.topic = "/w_ddzcoordinates";
+
+								md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); // Working on sending clue message
 
 								score = score + 10;
 
@@ -293,7 +294,7 @@ public class Person_movement : MonoBehaviour {
 				
         }
 
-		Debug.Log ("A collision, the score is: " + score);
+		// Debug.Log ("A collision, the score is: " + score);
                 
    }
 
