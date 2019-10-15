@@ -1,31 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using Rosbridge.Client;
 using System.Net.Sockets;
 using System;
 using System.Security.Policy;
 using ROSBridgeLib;
 using System.Xml;
-using UnityEngine;
 using System.IO;
 using System.Threading;
 using System.Linq;
 using Assets.Scripts;
 using Newtonsoft.Json;
 using System.Text;
+//using Rosbridge.Client;
 
 public class ros2 : MonoBehaviour {
     private ROSBridgeWebSocketConnection ros = null;
     private ROSBridgeWebSocketConnection roos2 = null;
     public ROSBridgeWebSocketConnection roos3 = null;
     public Dictionary<GameObject, drone> npcList = new Dictionary<GameObject, drone>();
-    // Use this for initialization
     public  ROSBridgeSubscriber[] allsubscribers;
     int buildcheck;
     string[] builds = new string[35];
     public GameObject[] drones2;
-    //config c = new config();
     public static int number_of_Drones;
     public string[] Message_Topics;
     int counter = 0;
@@ -44,8 +41,6 @@ public class ros2 : MonoBehaviour {
         if (File.Exists(filepath))
         {
             xmlDoc.Load(filepath);
-
-
 
             XmlNodeList transformList = xmlDoc.GetElementsByTagName("Topic");
             number_of_Drones = transformList.Count;
@@ -123,7 +118,7 @@ public class ros2 : MonoBehaviour {
 		// publishers for the Person_View consolidation
 		ros.AddPublisher(typeof(publisher_pv1));
 		ros.AddPublisher(typeof(publisher_pv2));
-		ros.AddPublisher(typeof(publisher_pv3));
+		// ros.AddPublisher(typeof(publisher_pv3));
 
         // Fire up the subscriber(s) and publisher(s)
         ros.Connect();
@@ -303,20 +298,21 @@ public class ros2 : MonoBehaviour {
 		// Debug.Log(ms);
 		ros.Publish(publisher_pv1.GetMessageTopic(), ms_pv1);
 		// Thread.Sleep(100);
-		ROSBridgeLib.std_msgs.StringMsg ms2_pv2 = new ROSBridgeLib.std_msgs.StringMsg(Person_movement.playerpointaddition);
+		//ROSBridgeLib.std_msgs.StringMsg ms2_pv2 = new ROSBridgeLib.std_msgs.StringMsg(Person_movement.playerpointaddition);
 		// Debug.Log(ms2);
-		ROSBridgeLib.std_msgs.StringMsg ms3_pv3 = new ROSBridgeLib.std_msgs.StringMsg(Person_movement.playerpointdeductdz);
+		//ROSBridgeLib.std_msgs.StringMsg ms2_pv2 = new ROSBridgeLib.std_msgs.StringMsg(Person_movement.playerpointdeductdz);
 
 		if (Person_movement.playerpointadditionbool == true)
 		{
+			ROSBridgeLib.std_msgs.StringMsg ms2_pv2 = new ROSBridgeLib.std_msgs.StringMsg(Person_movement.playerpointaddition);
 			ros.Publish(publisher_pv2.GetMessageTopic(), ms2_pv2);
-			// Debug.Log(ms2_pv2);
 			Person_movement.playerpointadditionbool = false;
 
 		}
 		if (Person_movement.playerpointdeductionbool == true)
 		{
-			ros.Publish(publisher_pv3.GetMessageTopic(), ms3_pv3);
+			ROSBridgeLib.std_msgs.StringMsg ms2_pv2 = new ROSBridgeLib.std_msgs.StringMsg(Person_movement.playerpointdeductdz);
+			ros.Publish(publisher_pv2.GetMessageTopic(), ms2_pv2);
 			Person_movement.playerpointdeductionbool = false;
 
 		}

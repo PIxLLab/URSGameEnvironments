@@ -124,9 +124,8 @@ public class Person_movement : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-       
 
-        if (collision.gameObject.tag=="building")  // or if(gameObject.CompareTag("YourWallTag"))
+        if (collision.gameObject.tag=="building") 
         {
             clue = false;
 			newBuilding = true;
@@ -163,10 +162,11 @@ public class Person_movement : MonoBehaviour {
                 // Debug.Log(hc.transform.position.x);
                 // Debug.Log(hc.transform.position.y);
                 // Debug.Log(hc.transform.position.z);
+
                 if (bound_x2 < hc.transform.position.x && hc.transform.position.x < bound_x1 && bound_z2 < hc.transform.position.z && hc.transform.position.z < bound_z1)
                 {
                     if (hc.GetComponent<Text>().text == "Treasure")
-                    {
+					{
                         clue = true;
                         GameObject.Find("gamestatus").GetComponent<Text>().text = "You found the treasure!!!";
                         ++treasurefound;
@@ -192,6 +192,7 @@ public class Person_movement : MonoBehaviour {
                             playerpointadditionbool = true;
 
 							visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+							buildingPos++;
                         }
 
                     }
@@ -201,7 +202,6 @@ public class Person_movement : MonoBehaviour {
 						if ((foundclues.Count(x => x == Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"))) == 0) && newBuilding == true)
                         {
                             clue = true;
-                            // Debug.Log("here in the clue");
                             foundclues[foundcluescounter] = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"));
                             ++foundcluescounter;
                             if (GameObject.Find("Clues").GetComponent<Text>().text == "Clues Placeholder")
@@ -212,9 +212,9 @@ public class Person_movement : MonoBehaviour {
 								md3.player_id = Convert.ToInt32(ros2.playerid);
                                 md3.point = 10;
 
-								md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); // Working on sending clue message
+								md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
 
-								score = score + 10;
+								score = score + 10; // for local debugging
 
                                 StringBuilder sb = new StringBuilder();
                                 using (StringWriter sw = new StringWriter(sb))
@@ -230,6 +230,7 @@ public class Person_movement : MonoBehaviour {
                                 playerpointadditionbool = true;
 
 								visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+								buildingPos++;
 
                             }
 							else if(newBuilding == true)
@@ -239,9 +240,10 @@ public class Person_movement : MonoBehaviour {
                                 MyDetail md3 = new MyDetail();
 								md3.player_id = Convert.ToInt32(ros2.playerid);
                                 md3.point = 10;
-                                //   md.topic = "/w_ddzcoordinates";
+                                
+								md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
 
-								score = score + 10;
+								score = score + 10; // for local debugging
 
                                 StringBuilder sb = new StringBuilder();
                                 using (StringWriter sw = new StringWriter(sb))
@@ -257,6 +259,7 @@ public class Person_movement : MonoBehaviour {
                                 playerpointadditionbool = true;
 
 								visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+								buildingPos++;
                             }
                         }
                     }
@@ -266,7 +269,6 @@ public class Person_movement : MonoBehaviour {
                 
 			if (checkcollision == 1 && clue==false && newBuilding == true)
             {
-               // Debug.Log("here out the clue");
                 // Debug.Log("Entered");
                 playerpointadditionbool = true;
                 MyDetail md3 = new MyDetail();
@@ -289,12 +291,13 @@ public class Person_movement : MonoBehaviour {
 
                 playerpointaddition = sb.ToString();
 				visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+				buildingPos++;
 
             }
 				
         }
 
-		// Debug.Log ("A collision, the score is: " + score);
+		Debug.Log ("A collision, the score is: " + score);
                 
    }
 
@@ -305,21 +308,18 @@ public class Person_movement : MonoBehaviour {
     {
         playerpointadditionbool =false;
         checkcollision=0;
-       
-
-
+  
     }
 
     private void OnTriggerEnter(Collider other)
     {
 
-        //  Debug.Log("entered");
-        //speed = 1;
-        // counter.timeLeft = counter.timeLeft-100;
-        //hdz = true;
-        ++checkhdz;
-        if (checkhdz == 1)
+		// Debug.Log (other.gameObject.tag);
+
+		if (other.gameObject.tag == "hdz")
         {
+
+			Debug.Log("Human danger zone entered?");
             MyDetail md3 = new MyDetail();
 
 			md3.player_id = Convert.ToInt32(ros2.playerid);

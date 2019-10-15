@@ -427,6 +427,8 @@ public class drone : MonoBehaviour {
     private void OnCollisionEnter(Collision col)
     {
 
+		//  if (col.gameObject.CompareTag("wall") || col.gameObject.CompareTag("building") || col.gameObject.CompareTag("ground"))
+
         if (col.gameObject.CompareTag("wall") || col.gameObject.CompareTag("building") || col.gameObject.CompareTag("ground"))
         {
             rb.angularVelocity = Vector3.zero;
