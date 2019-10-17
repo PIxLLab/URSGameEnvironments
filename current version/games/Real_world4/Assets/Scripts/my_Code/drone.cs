@@ -429,7 +429,7 @@ public class drone : MonoBehaviour {
 
 		//  if (col.gameObject.CompareTag("wall") || col.gameObject.CompareTag("building") || col.gameObject.CompareTag("ground"))
 
-        if (col.gameObject.CompareTag("wall") || col.gameObject.CompareTag("building") || col.gameObject.CompareTag("ground"))
+        if (col.gameObject.CompareTag("wall") || col.gameObject.CompareTag("ground"))
         {
             rb.angularVelocity = Vector3.zero;
             rb.velocity = Vector3.zero;
@@ -588,7 +588,7 @@ public class drone : MonoBehaviour {
             movy = (other.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
 
 
-            if (rb.transform.position.y < 20)
+            if (rb.transform.position.y <= 20)
             {
                 //txt3.text = "Drone Clue Detected " + " The Clue is: " + other.GetComponent<GUIText>().text;
                 movx = (other.transform.position.x / game_mec.n_x_scale) + game_mec.oriiginx;
@@ -655,7 +655,7 @@ public class drone : MonoBehaviour {
 
 			// This if-statement added to test drone-ineligibility of finding clues when rb.transform.position.y >= 20  --MC
 
-			if (rb.transform.position.y < 20) 
+			if (rb.transform.position.y <= 20) 
 			{
 				movx = (other.transform.position.x / game_mec.n_x_scale) + game_mec.oriiginx;
 				movy = (other.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
@@ -704,7 +704,7 @@ public class drone : MonoBehaviour {
 
        // }
         //else if (bui.Contains(other.GetComponent<Text>().text)) { buipublisher = false; }
-            if (other.gameObject.CompareTag("hdz"))
+        if (other.gameObject.CompareTag("hdz"))
         {
 
             if (Math.Sqrt(Math.Pow((rb.transform.position.x - prevoiusCheckSendMessage.x), 2) + Math.Pow((rb.transform.position.z - prevoiusCheckSendMessage.z), 2)) > 10)

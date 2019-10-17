@@ -322,6 +322,12 @@ public class Person_movement : MonoBehaviour {
 			Debug.Log("Human danger zone entered?");
             MyDetail md3 = new MyDetail();
 
+			p_loc_x = (rb.transform.position.x / game_mec.p_x_scale) + game_mec.oriiginx;
+			p_loc_y = (rb.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
+
+			md3.longitude = p_loc_x;
+			md3.latitude = p_loc_y;
+
 			md3.player_id = Convert.ToInt32(ros2.playerid);
             md3.point = -5;
             //   md.topic = "/w_ddzcoordinates";

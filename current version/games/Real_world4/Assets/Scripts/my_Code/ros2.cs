@@ -118,7 +118,7 @@ public class ros2 : MonoBehaviour {
 		// publishers for the Person_View consolidation
 		ros.AddPublisher(typeof(publisher_pv1));
 		ros.AddPublisher(typeof(publisher_pv2));
-		// ros.AddPublisher(typeof(publisher_pv3));
+		ros.AddPublisher(typeof(publisher_pv3));
 
         // Fire up the subscriber(s) and publisher(s)
         ros.Connect();
@@ -181,15 +181,13 @@ public class ros2 : MonoBehaviour {
         MyDetail md = new MyDetail();
         MyDetail md2 = new MyDetail();
         ROSBridgeLib.std_msgs.StringMsg ms = new ROSBridgeLib.std_msgs.StringMsg(drone.ddzcoordinations);
-            ROSBridgeLib.std_msgs.StringMsg ms5 = new ROSBridgeLib.std_msgs.StringMsg(drone.hdzcoordinations);
-            ROSBridgeLib.std_msgs.StringMsg ms6 = new ROSBridgeLib.std_msgs.StringMsg( drone.dccoordinations);
-            ROSBridgeLib.std_msgs.StringMsg ms7 = new ROSBridgeLib.std_msgs.StringMsg( drone.hccoordinations);
+        ROSBridgeLib.std_msgs.StringMsg ms5 = new ROSBridgeLib.std_msgs.StringMsg(drone.hdzcoordinations);
+        ROSBridgeLib.std_msgs.StringMsg ms6 = new ROSBridgeLib.std_msgs.StringMsg(drone.dccoordinations);
+        ROSBridgeLib.std_msgs.StringMsg ms7 = new ROSBridgeLib.std_msgs.StringMsg(drone.hccoordinations);
+
         if (deductbattery == true)
-
-
         {
-
-
+			
             for (int i = 0; i < number_of_Drones; ++i)
             {
                
