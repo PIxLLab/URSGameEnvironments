@@ -185,6 +185,8 @@ public class ros2 : MonoBehaviour {
         ROSBridgeLib.std_msgs.StringMsg ms6 = new ROSBridgeLib.std_msgs.StringMsg(drone.dccoordinations);
         ROSBridgeLib.std_msgs.StringMsg ms7 = new ROSBridgeLib.std_msgs.StringMsg(drone.hccoordinations);
 
+		ROSBridgeLib.std_msgs.StringMsg ms8 = new ROSBridgeLib.std_msgs.StringMsg(Person_movement.hdzcoordinations); // Human Danger Zone
+
         if (deductbattery == true)
         {
 			
@@ -271,7 +273,7 @@ public class ros2 : MonoBehaviour {
         //{
         //    ros.Publish(publisher4.GetMessageTopic(), ms4);
         //}
-        if (drone.hdzpublisher == true)
+		if (drone.hdzpublisher == true)
         {
             ros.Publish(publisher5.GetMessageTopic(), ms5);
            
@@ -279,12 +281,15 @@ public class ros2 : MonoBehaviour {
         if (drone.dcpublisher == true)
         {
             ros.Publish(publisher6.GetMessageTopic(), ms6);
+
+			drone.dcpublisher = false;
             
         }
         if (drone.hcpublisher == true)
         {
             ros.Publish(publisher7.GetMessageTopic(), ms7);
-            
+
+			drone.hcpublisher = false;
         }
         
         //Debug.Log(ms.ToString());
@@ -313,6 +318,11 @@ public class ros2 : MonoBehaviour {
 			ros.Publish(publisher_pv2.GetMessageTopic(), ms2_pv2);
 			Person_movement.playerpointdeductionbool = false;
 
+		}
+		if (Person_movement.hdzpublisher == true) {
+			ros.Publish (publisher5.GetMessageTopic (), ms8);
+
+			Person_movement.hdzpublisher = false;
 		}
 			
 

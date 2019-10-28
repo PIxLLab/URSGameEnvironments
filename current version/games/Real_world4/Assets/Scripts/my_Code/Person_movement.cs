@@ -12,13 +12,15 @@ using UnityEngine.UI;
 public class Person_movement : MonoBehaviour {
 
     public Rigidbody rb;
-    float speed =5;
+    float speed =10;
     public GameObject[] hcs;
     public GameObject[] hdcs;
     int[] foundclues;
     int foundcluescounter;
 	public static int score = 0;
 	public  Vector3 move = new Vector3(0, 0, 0);
+	Vector3 prevoiusCheckSendMessage = new Vector3(0,0,0);
+	Vector3 prevoiusCheckSendMessagedz = new Vector3(0, 0, 0);
     float bound_x1, bound_z1;
     float bound_x2, bound_z2;
     public static string p_location;
@@ -32,6 +34,9 @@ public class Person_movement : MonoBehaviour {
 	public string[] visitedBuildings = new string[50];
 	public int buildingPos = 0;
 	public bool newBuilding = false;
+
+	public static bool hdzpublisher = false;
+	public static string hdzcoordinations;
 
     void Start () {
 
@@ -319,40 +324,132 @@ public class Person_movement : MonoBehaviour {
 		if (other.gameObject.tag == "hdz")
         {
 
-			Debug.Log("Human danger zone entered?");
-            MyDetail md3 = new MyDetail();
+			Debug.Log ("Human danger zone");
 
-			p_loc_x = (rb.transform.position.x / game_mec.p_x_scale) + game_mec.oriiginx;
-			p_loc_y = (rb.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
+			if (Math.Sqrt (Math.Pow ((rb.transform.position.x - prevoiusCheckSendMessage.x), 2) + Math.Pow ((rb.transform.position.z - prevoiusCheckSendMessage.z), 2)) > 10) {
+				
+				prevoiusCheckSendMessage.x = rb.transform.position.x;
+				prevoiusCheckSendMessage.z = rb.transform.position.z;
 
-			md3.longitude = p_loc_x;
-			md3.latitude = p_loc_y;
+				Debug.Log ("HDZ new positon");
 
-			md3.player_id = Convert.ToInt32(ros2.playerid);
-            md3.point = -5;
-            //   md.topic = "/w_ddzcoordinates";
 
-            StringBuilder sb = new StringBuilder();
-            using (StringWriter sw = new StringWriter(sb))
-            using (JsonTextWriter writer = new JsonTextWriter(sw))
-            {
-                writer.QuoteChar = '\'';
+				MyDetail md3 = new MyDetail ();
 
-                JsonSerializer ser = new JsonSerializer();
-                ser.Serialize(writer, md3);
-            }
+				p_loc_x = (rb.transform.position.x / game_mec.p_x_scale) + game_mec.oriiginx;
+				p_loc_y = (rb.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
 
-            playerpointdeductdz = sb.ToString();
-            playerpointdeductionbool = true;
-        }
+				md3.longitude = p_loc_x;
+				md3.latitude = p_loc_y;
+
+				md3.player_id = Convert.ToInt32 (ros2.playerid);
+				md3.point = -5;
+				//   md.topic = "/w_ddzcoordinates";
+
+				StringBuilder sb = new StringBuilder ();
+				using (StringWriter sw = new StringWriter (sb))
+				using (JsonTextWriter writer = new JsonTextWriter (sw)) {
+					writer.QuoteChar = '\'';
+
+					JsonSerializer ser = new JsonSerializer ();
+					ser.Serialize (writer, md3);
+				}
+
+				playerpointdeductdz = sb.ToString ();
+				hdzcoordinations = sb.ToString ();
+				playerpointdeductionbool = true;
+				hdzpublisher = true;
+
+			}
+
+			/*
+			if (Math.Sqrt (Math.Pow ((rb.transform.position.x - prevoiusCheckSendMessage.x), 2) + Math.Pow ((rb.transform.position.z - prevoiusCheckSendMessage.z), 2)) > 10) {
+				
+				prevoiusCheckSendMessage.x = rb.transform.position.x;
+				prevoiusCheckSendMessage.z = rb.transform.position.z;
+
+				MyDetail md3 = new MyDetail ();
+
+				p_loc_x = (rb.transform.position.x / game_mec.p_x_scale) + game_mec.oriiginx;
+				p_loc_y = (rb.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
+
+				md3.longitude = p_loc_x;
+				md3.latitude = p_loc_y;
+
+				md3.player_id = Convert.ToInt32 (ros2.playerid);
+
+				StringBuilder sb = new StringBuilder ();
+				using (StringWriter sw = new StringWriter (sb))
+				using (JsonTextWriter writer = new JsonTextWriter (sw)) {
+					writer.QuoteChar = '\'';
+
+					JsonSerializer ser = new JsonSerializer ();
+					ser.Serialize (writer, md3);
+				}
+
+				hdzcoordinations = sb.ToString();
+				hdzpublisher = true;
+
+			}
+			*/
+
+       	}
+
+		Debug.Log ("HDZ");
        
     }
 
+
+
+	private void OnTriggerStay(Collider other)
+	{
+		if (other.gameObject.CompareTag("hdz"))
+		{
+
+			if (Math.Sqrt (Math.Pow ((rb.transform.position.x - prevoiusCheckSendMessage.x), 2) + Math.Pow ((rb.transform.position.z - prevoiusCheckSendMessage.z), 2)) > 10) {
+
+				prevoiusCheckSendMessage.x = rb.transform.position.x;
+				prevoiusCheckSendMessage.z = rb.transform.position.z;
+
+				Debug.Log ("HDZ new positon");
+
+
+				MyDetail md3 = new MyDetail ();
+
+				p_loc_x = (rb.transform.position.x / game_mec.p_x_scale) + game_mec.oriiginx;
+				p_loc_y = (rb.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
+
+				md3.longitude = p_loc_x;
+				md3.latitude = p_loc_y;
+
+				md3.player_id = Convert.ToInt32 (ros2.playerid);
+				md3.point = -5;
+				//   md.topic = "/w_ddzcoordinates";
+
+				StringBuilder sb = new StringBuilder ();
+				using (StringWriter sw = new StringWriter (sb))
+				using (JsonTextWriter writer = new JsonTextWriter (sw)) {
+					writer.QuoteChar = '\'';
+
+					JsonSerializer ser = new JsonSerializer ();
+					ser.Serialize (writer, md3);
+				}
+
+				hdzcoordinations = sb.ToString ();
+				hdzpublisher = true;
+
+			}
+		}
+	}
+
    
 
-        private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         playerpointdeductionbool = false; checkhdz =0;
+
+		hdzpublisher = false;
+
         //   Debug.Log("exit");
         //  speed = 5;
         //  hdz = false;

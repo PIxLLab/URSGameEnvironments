@@ -38,6 +38,9 @@ public class drone : MonoBehaviour {
     public  double battery_value=100;
     public static string drone_clue_value;
     public static string building_numbers;
+
+	bool[] found_clues = new bool[10];
+	int clue_id;
     
 
     public static string buildcheck;
@@ -66,7 +69,9 @@ public class drone : MonoBehaviour {
 
     void Start() {
 
-
+		for (int i = 0; i < 10; i++) {
+			found_clues [i] = false;
+		}
         
 
         distances = new float[NumberOfSamples];
@@ -443,15 +448,19 @@ public class drone : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+
+
         
         if (other.gameObject.CompareTag("building") && !(bui.Contains(other.GetComponent<Text>().text)))
-        {
-
+		{
            
             //buipublisher = true;
+
             movx = (transform.TransformPoint(other.bounds.center).x / game_mec.n_x_scale) + game_mec.oriiginx;
             movy = (transform.TransformPoint(other.bounds.center).y / game_mec.y_scale) + game_mec.oriiginy;
+
             // Debug.Log("Building number is: " + other.GetComponent<Text>().text + " location: longitude: " + movx.ToString() + " " + " latitude: " + " " + movy.ToString());
+
             bui[buicheck] = other.GetComponent<Text>().text;
             ++buicheck;
             buipublisher = true;
@@ -583,13 +592,19 @@ public class drone : MonoBehaviour {
 
         if (other.gameObject.CompareTag("dc"))
         {
-            dcpublisher = true;
+            
+			clue_id = Convert.ToInt32(getBetween(other.GetComponent<Text>().text, "\'", "\'"));
+
+			Debug.Log (clue_id);
+			Debug.Log (found_clues[clue_id - 1]);
+
             movx = (other.transform.position.x / game_mec.n_x_scale) + game_mec.oriiginx;
             movy = (other.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
 
-
-            if (rb.transform.position.y <= 20)
+			if (rb.transform.position.y <= 20 && !found_clues[clue_id - 1])
             {
+				dcpublisher = true;
+
                 //txt3.text = "Drone Clue Detected " + " The Clue is: " + other.GetComponent<GUIText>().text;
                 movx = (other.transform.position.x / game_mec.n_x_scale) + game_mec.oriiginx;
                 movy = (other.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
@@ -616,6 +631,7 @@ public class drone : MonoBehaviour {
                 }
 
                 dccoordinations = sb.ToString();
+				found_clues [clue_id - 1] = true;
             }
             else
             {
@@ -648,15 +664,22 @@ public class drone : MonoBehaviour {
 
         if (other.gameObject.CompareTag("hc") )
         {
-            hcpublisher = true;
+
+			clue_id = Convert.ToInt32(getBetween(other.GetComponent<Text>().text, "\'", "\'"));
+
+			Debug.Log (clue_id);
+			Debug.Log (found_clues[clue_id - 1]);
+           
             //  txt2.text = "Collision detected in hc ";
             movx = (other.transform.position.x / game_mec.n_x_scale) + game_mec.oriiginx;
             movy = (other.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
 
 			// This if-statement added to test drone-ineligibility of finding clues when rb.transform.position.y >= 20  --MC
 
-			if (rb.transform.position.y <= 20) 
+			if (rb.transform.position.y <= 20 && !found_clues[clue_id - 1]) 
 			{
+				hcpublisher = true;
+
 				movx = (other.transform.position.x / game_mec.n_x_scale) + game_mec.oriiginx;
 				movy = (other.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
 
@@ -680,6 +703,7 @@ public class drone : MonoBehaviour {
 				}
 
 				hccoordinations = sb.ToString ();
+				found_clues[clue_id - 1] = true;
 			 }
          }
     }
