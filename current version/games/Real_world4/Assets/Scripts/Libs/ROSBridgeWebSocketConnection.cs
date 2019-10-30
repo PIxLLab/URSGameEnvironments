@@ -75,6 +75,7 @@ namespace ROSBridgeLib
         public WebSocket _ws;
         private System.Threading.Thread _myThread;
         public List<ROSBridgeSubscriber> _subscribers; // our subscribers
+		public List<RBS1> _subscribers1;
         public List<RSB2> _subscribers2;
         public List<RSB3> _subscribers3;
         private List<Type> _publishers; //our publishers
@@ -159,6 +160,7 @@ namespace ROSBridgeLib
             _port = port;
             _myThread = null;
             _subscribers = new List<ROSBridgeSubscriber>();
+			_subscribers1 = new List<RBS1>();
             _subscribers2 = new List<RSB2>();
             _subscribers3 = new List<RSB3>();
             _publishers = new List<Type>();
@@ -213,7 +215,11 @@ namespace ROSBridgeLib
             {
                 _ws.Send(ROSBridgeMsg.UnSubscribe(p.GetMessageTopic()));
                // Debug.Log("Sending " + ROSBridgeMsg.UnSubscribe(p.GetMessageTopic()));
-            }
+			}foreach (RBS1 p in _subscribers1)
+			{
+				_ws.Send(ROSBridgeMsg.UnSubscribe(p.GetMessageTopic1()));
+				// Debug.Log("Sending " + ROSBridgeMsg.UnSubscribe(p.GetMessageTopic()));
+			}
             foreach (RSB2 p in _subscribers2)
             {
                 _ws.Send(ROSBridgeMsg.UnSubscribe(p.GetMessageTopic2()));
@@ -284,7 +290,23 @@ namespace ROSBridgeLib
 
 
                     }
-                }
+				}
+				foreach (RBS1 pp in _subscribers1)
+				{
+
+					if (topic.Equals(pp.GetMessageTopic1()) && count==0)
+					{
+
+						//  Debug.Log( node["msg"].ToString());
+						//Update(p, node["msg"].ToString() );
+
+						pp.CallBack1(node["msg"].ToString());
+						++count;
+
+					}
+
+				}
+
                 foreach (RSB2 pp in _subscribers2)
                 {
 

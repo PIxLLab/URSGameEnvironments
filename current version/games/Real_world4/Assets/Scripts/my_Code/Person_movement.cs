@@ -82,8 +82,8 @@ public class Person_movement : MonoBehaviour {
 			// This section reads user input to determine direction
             move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-            transform.position += move * speed * Time.deltaTime;
-
+            //transform.position += move * speed * Time.deltaTime;
+			transform.position = new Vector3((float) ros2.humanXpos, 0.2f, (float) ros2.humanYpos);
             p_loc_x = (rb.transform.position.x / game_mec.p_x_scale) + game_mec.oriiginx;
             p_loc_y = (rb.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
 
@@ -137,10 +137,10 @@ public class Person_movement : MonoBehaviour {
 
             ++checkcollision;
             
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            //rb.velocity = Vector3.zero;
+            //rb.angularVelocity = Vector3.zero;
            
-            move = Vector3.zero;
+            //move = Vector3.zero;
             bound_x1 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.x - collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.x)*-1;
             bound_x2 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.x + collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.x)*-1;
             bound_z1 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.z - collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.z)*-1;

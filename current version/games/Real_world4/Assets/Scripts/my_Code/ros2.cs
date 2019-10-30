@@ -16,6 +16,7 @@ using System.Text;
 
 public class ros2 : MonoBehaviour {
     private ROSBridgeWebSocketConnection ros = null;
+	private ROSBridgeWebSocketConnection roos1 = null;
     private ROSBridgeWebSocketConnection roos2 = null;
     public ROSBridgeWebSocketConnection roos3 = null;
     public Dictionary<GameObject, drone> npcList = new Dictionary<GameObject, drone>();
@@ -32,6 +33,16 @@ public class ros2 : MonoBehaviour {
     string total_battery_value;
     public static string playerid; double currentbattery;
     int minutecounter;bool deductbattery;
+
+	String theCoorMsg;
+	String[] parts;
+	public String[] yCoordinate;
+	public String[] xCoordinate;
+	static public double humanXpos;
+	static public double humanYpos;
+
+
+
     void Awake () {
         // Where the rosbridge instance is running, could be localhost, or some external IP
 
@@ -73,6 +84,15 @@ public class ros2 : MonoBehaviour {
         
         //  ros = new ROSBridgeWebSocketConnection("ws://128.123.63.68", 9090);
         allsubscribers = new ROSBridgeSubscriber[number_of_Drones];
+		/*--------*/
+
+		RBS1 rs1 = new RBS1();
+		roos1 = new ROSBridgeWebSocketConnection(network, port);
+		roos1.Connect();
+		Thread.Sleep(1000);
+		roos1._ws.Send(ROSBridgeMsg.Subscribe("/human_position", "std_msgs/String"));
+		roos1._subscribers1.Add(rs1);
+
         /*---------------Movaghat-------------------*/
         roos2 = new ROSBridgeWebSocketConnection(network, port);
         RSB2 rs2 = new RSB2();
@@ -116,7 +136,7 @@ public class ros2 : MonoBehaviour {
         ros.AddPublisher(typeof(publisher7));
 
 		// publishers for the Person_View consolidation
-		ros.AddPublisher(typeof(publisher_pv1));
+		//ros.AddPublisher(typeof(publisher_pv1));
 		ros.AddPublisher(typeof(publisher_pv2));
 		ros.AddPublisher(typeof(publisher_pv3));
 
@@ -328,7 +348,14 @@ public class ros2 : MonoBehaviour {
 
         ros.Render();
 
-
+		theCoorMsg = RBS1.hCoor;
+		parts = theCoorMsg.Split(':');
+		yCoordinate = parts[2].Split (',');
+		xCoordinate = parts [3].Split('"');
+		double convertX = Convert.ToDouble(xCoordinate[0]);
+		double convertY = Convert.ToDouble(yCoordinate[0]);
+		humanXpos = ((convertX - (-106.75239801428688)) / 0.0000089 * Math.Cos(32.2810102009863 * 0.018));
+		humanYpos = ((convertY - 32.2810102009863) / 0.0000089);
 
     }
 
