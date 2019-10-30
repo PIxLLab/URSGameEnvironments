@@ -319,7 +319,7 @@ public class ros2 : MonoBehaviour {
 
 		ROSBridgeLib.std_msgs.StringMsg ms_pv1 = new ROSBridgeLib.std_msgs.StringMsg(Person_movement.p_location);
 		// Debug.Log(ms);
-		ros.Publish(publisher_pv1.GetMessageTopic(), ms_pv1);
+		// ros.Publish(publisher_pv1.GetMessageTopic(), ms_pv1);
 		// Thread.Sleep(100);
 		//ROSBridgeLib.std_msgs.StringMsg ms2_pv2 = new ROSBridgeLib.std_msgs.StringMsg(Person_movement.playerpointaddition);
 		// Debug.Log(ms2);
