@@ -294,14 +294,14 @@ namespace ROSBridgeLib
 				foreach (RBS1 pp in _subscribers1)
 				{
 
-					if (topic.Equals(pp.GetMessageTopic1()) && count==0)
+					if (topic.Equals(pp.GetMessageTopic1()))
 					{
 
 						//  Debug.Log( node["msg"].ToString());
 						//Update(p, node["msg"].ToString() );
 
 						pp.CallBack1(node["msg"].ToString());
-						++count;
+						// ++count;
 
 					}
 
