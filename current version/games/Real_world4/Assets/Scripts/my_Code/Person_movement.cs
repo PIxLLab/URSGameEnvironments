@@ -208,7 +208,9 @@ public class Person_movement : MonoBehaviour {
                     else
 					{
 
-						if ((foundclues.Count(x => x == Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"))) == 0) && newBuilding == true)
+						//if ((foundclues.Count(x => x == Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"))) == 0) && newBuilding == true)
+
+						if ((foundclues.Count(x => x == Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"))) == 0))
                         {
                             clue = true;
                             foundclues[foundcluescounter] = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"));
@@ -219,7 +221,19 @@ public class Person_movement : MonoBehaviour {
                                 MyDetail md3 = new MyDetail();
 
 								md3.player_id = Convert.ToInt32(ros2.playerid);
-                                md3.point = 10;
+                                
+								if (newBuilding == true) {
+									
+									md3.point = 10;
+
+									visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+									buildingPos++;
+
+								} else {
+
+									md3.point = 0;
+
+								}
 
 								md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
 
@@ -238,21 +252,29 @@ public class Person_movement : MonoBehaviour {
                                 playerpointaddition = sb.ToString();
                                 playerpointadditionbool = true;
 
-								visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
-								buildingPos++;
-
                             }
-							else if(newBuilding == true)
+							else 
                             {
                                 clue = true;
                                 GameObject.Find("Clues").GetComponent<Text>().text = GameObject.Find("Clues").GetComponent<Text>().text + ", " + hc.GetComponent<Text>().text.Substring(hc.GetComponent<Text>().text.LastIndexOf(':') + 1);
                                 MyDetail md3 = new MyDetail();
 								md3.player_id = Convert.ToInt32(ros2.playerid);
-                                md3.point = 10;
+
+								if (newBuilding == true) {
+
+									md3.point = 10;
+									score = score + 10; // for local debugging
+
+									visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+									buildingPos++;
+
+								} else {
+
+									md3.point = 0;
+
+								}
                                 
 								md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
-
-								score = score + 10; // for local debugging
 
                                 StringBuilder sb = new StringBuilder();
                                 using (StringWriter sw = new StringWriter(sb))
@@ -266,9 +288,6 @@ public class Person_movement : MonoBehaviour {
 
                                 playerpointaddition = sb.ToString();
                                 playerpointadditionbool = true;
-
-								visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
-								buildingPos++;
                             }
                         }
                     }

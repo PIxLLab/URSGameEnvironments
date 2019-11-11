@@ -601,7 +601,9 @@ public class drone : MonoBehaviour {
             movx = (other.transform.position.x / game_mec.n_x_scale) + game_mec.oriiginx;
             movy = (other.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
 
-			if (rb.transform.position.y <= 20 && !found_clues[clue_id - 1])
+			// if (rb.transform.position.y <= 20 && !found_clues[clue_id - 1])
+
+			if (rb.transform.position.y <= 20)
             {
 				dcpublisher = true;
 
@@ -676,7 +678,9 @@ public class drone : MonoBehaviour {
 
 			// This if-statement added to test drone-ineligibility of finding clues when rb.transform.position.y >= 20  --MC
 
-			if (rb.transform.position.y <= 20 && !found_clues[clue_id - 1]) 
+			//if (rb.transform.position.y <= 20 && !found_clues[clue_id - 1]) 
+
+			if (rb.transform.position.y <= 20) 
 			{
 				hcpublisher = true;
 
