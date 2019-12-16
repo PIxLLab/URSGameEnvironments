@@ -41,12 +41,15 @@ public class ros2 : MonoBehaviour {
 	static public double humanXpos;
 	static public double humanYpos;
 
+    public static double convertX;
+    public static double convertY;
+
 
 
     void Awake () {
         // Where the rosbridge instance is running, could be localhost, or some external IP
 
-		string filepath = @"/Users/mishavc/Local_URSWearable/URSGameEnvironments/current version/newsetting/config.xml";
+		string filepath = @"/Users/longtran/Desktop/setting/config.xml";
 
         XmlDocument xmlDoc = new XmlDocument();
         if (File.Exists(filepath))
@@ -296,6 +299,7 @@ public class ros2 : MonoBehaviour {
 		if (drone.hdzpublisher == true)
         {
             ros.Publish(publisher5.GetMessageTopic(), ms5);
+      
            
         }
         if (drone.dcpublisher == true)
@@ -352,8 +356,8 @@ public class ros2 : MonoBehaviour {
 		parts = theCoorMsg.Split(':');
 		yCoordinate = parts[2].Split (',');
 		xCoordinate = parts [3].Split('"');
-		double convertX = Convert.ToDouble(xCoordinate[0]);
-		double convertY = Convert.ToDouble(yCoordinate[0]);
+		convertX = Convert.ToDouble(xCoordinate[0]);
+		convertY = Convert.ToDouble(yCoordinate[0]);
 		humanXpos = ((convertX - (-106.75239801428688)) / 0.0000089 * Math.Cos(32.2810102009863 * 0.018));
 		humanYpos = ((convertY - 32.2810102009863) / 0.0000089);
 

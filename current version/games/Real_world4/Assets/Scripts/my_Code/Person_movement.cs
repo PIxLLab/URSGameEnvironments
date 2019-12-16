@@ -45,6 +45,7 @@ public class Person_movement : MonoBehaviour {
         rb.freezeRotation = true;
         p_loc_x= (rb.transform.position.x / game_mec.p_x_scale) + game_mec.oriiginx;
         p_loc_y = (rb.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
+
         MyDetail md3 = new MyDetail();
         md3.longitude = p_loc_x;
         md3.latitude = p_loc_y;
@@ -80,7 +81,7 @@ public class Person_movement : MonoBehaviour {
         {
 
 			// This section reads user input to determine direction
-            // move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
             //transform.position += move * speed * Time.deltaTime;
 			transform.position = new Vector3((float) ros2.humanXpos, 0.2f, (float) ros2.humanYpos);
@@ -91,23 +92,23 @@ public class Person_movement : MonoBehaviour {
             // p_loc_x = (rb.transform.position.x / game_mec.p_x_scale) + game_mec.oriiginx;
             // p_loc_y = (rb.transform.position.z / game_mec.y_scale) + game_mec.oriiginy;
 
-            MyDetail md3 = new MyDetail();
-            md3.longitude = p_loc_x;
-            md3.latitude = p_loc_y;
-			md3.player_id = Convert.ToInt32(ros2.playerid);
+   //         MyDetail md3 = new MyDetail();
+   //         md3.longitude = p_loc_x;
+   //         md3.latitude = p_loc_y;
+			//md3.player_id = Convert.ToInt32(ros2.playerid);
 
-            StringBuilder sb = new StringBuilder();
-            using (StringWriter sw = new StringWriter(sb))
-            using (JsonTextWriter writer = new JsonTextWriter(sw))
-            {
-                writer.QuoteChar = '\'';
+            //StringBuilder sb = new StringBuilder();
+            //using (StringWriter sw = new StringWriter(sb))
+            //using (JsonTextWriter writer = new JsonTextWriter(sw))
+            //{
+            //    writer.QuoteChar = '\'';
 
-                JsonSerializer ser = new JsonSerializer();
-                ser.Serialize(writer, md3);
-            }
+            //    JsonSerializer ser = new JsonSerializer();
+            //    ser.Serialize(writer, md3);
+            //}
             // Debug.Log(sb.ToString());
 
-            p_location = sb.ToString();
+            // p_location = sb.ToString();
 
             // Debug.Log(p_location);
             // p_location = "Longitude: " + p_loc_x.ToString() + " Latitude: " + p_loc_y.ToString();
@@ -131,222 +132,226 @@ public class Person_movement : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
+  //  void OnCollisionEnter(Collision collision)
+  //  {
 
-        if (collision.gameObject.tag=="building") 
-        {
-            clue = false;
-			newBuilding = true;
+  //      if (collision.gameObject.tag=="building") 
+  //      {
+  //          clue = false;
+		//	newBuilding = true;
 
-            ++checkcollision;
+  //          ++checkcollision;
             
-            //rb.velocity = Vector3.zero;
-            //rb.angularVelocity = Vector3.zero;
+  //          //rb.velocity = Vector3.zero;
+  //          //rb.angularVelocity = Vector3.zero;
            
-            //move = Vector3.zero;
-            bound_x1 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.x - collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.x)*-1;
-            bound_x2 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.x + collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.x)*-1;
-            bound_z1 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.z - collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.z)*-1;
-            bound_z2 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.z + collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.z)*-1;
+  //          //move = Vector3.zero;
+  //          bound_x1 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.x - collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.x)*-1;
+  //          bound_x2 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.x + collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.x)*-1;
+  //          bound_z1 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.z - collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.z)*-1;
+  //          bound_z2 = (collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.z + collision.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.z)*-1;
 
-			// Debug.Log(collision.gameObject.GetComponent<Text> ().text);
+		//	// Debug.Log(collision.gameObject.GetComponent<Text> ().text);
 
-			for (int i = 0; i < (buildingPos + 1); i++) 
-			{
-				if (visitedBuildings [i] == collision.gameObject.GetComponent<Text> ().text) 
-				{
-					newBuilding = false;
-				}
-			}
+		//	for (int i = 0; i < (buildingPos + 1); i++) 
+		//	{
+		//		if (visitedBuildings [i] == collision.gameObject.GetComponent<Text> ().text) 
+		//		{
+		//			newBuilding = false;
+		//		}
+		//	}
 
-            foreach (GameObject hc in hcs)
-            {
+  //          foreach (GameObject hc in hcs)
+  //          {
 
-                // Debug.Log(bound_x1);
-                // Debug.Log(bound_x2);
-                // Debug.Log(bound_z1);
-                // Debug.Log(bound_z2);
-                // Debug.Log(hc.transform.localPosition);
-                // Debug.Log(hc.transform.position.x);
-                // Debug.Log(hc.transform.position.y);
-                // Debug.Log(hc.transform.position.z);
+  //              // Debug.Log(bound_x1);
+  //              // Debug.Log(bound_x2);
+  //              // Debug.Log(bound_z1);
+  //              // Debug.Log(bound_z2);
+  //              // Debug.Log(hc.transform.localPosition);
+  //              // Debug.Log(hc.transform.position.x);
+  //              // Debug.Log(hc.transform.position.y);
+  //              // Debug.Log(hc.transform.position.z);
 
-                if (bound_x2 < hc.transform.position.x && hc.transform.position.x < bound_x1 && bound_z2 < hc.transform.position.z && hc.transform.position.z < bound_z1)
-                {
-                    if (hc.GetComponent<Text>().text == "Treasure")
-					{
-                        clue = true;
-                        GameObject.Find("gamestatus").GetComponent<Text>().text = "You found the treasure!!!";
-                        ++treasurefound;
-                        if (treasurefound == 1)
-                        {
-                            MyDetail md3 = new MyDetail();
+  //              if (bound_x2 < hc.transform.position.x && hc.transform.position.x < bound_x1 && bound_z2 < hc.transform.position.z && hc.transform.position.z < bound_z1)
+  //              {
+  //                  if (hc.GetComponent<Text>().text == "Treasure")
+		//			{
+  //                      clue = true;
+  //                      GameObject.Find("gamestatus").GetComponent<Text>().text = "You found the treasure!!!";
+  //                      ++treasurefound;
+  //                      if (treasurefound == 1)
+  //                      {
+  //                          MyDetail md3 = new MyDetail();
 
-							md3.player_id = Convert.ToInt32(ros2.playerid);
-                            md3.point = 20;
-                            //   md.topic = "/w_ddzcoordinates";
+		//					md3.player_id = Convert.ToInt32(ros2.playerid);
+  //                          md3.point = 20;
+  //                          //   md.topic = "/w_ddzcoordinates";
 
-                            StringBuilder sb = new StringBuilder();
-                            using (StringWriter sw = new StringWriter(sb))
-                            using (JsonTextWriter writer = new JsonTextWriter(sw))
-                            {
-                                writer.QuoteChar = '\'';
+  //                          StringBuilder sb = new StringBuilder();
+  //                          using (StringWriter sw = new StringWriter(sb))
+  //                          using (JsonTextWriter writer = new JsonTextWriter(sw))
+  //                          {
+  //                              writer.QuoteChar = '\'';
 
-                                JsonSerializer ser = new JsonSerializer();
-                                ser.Serialize(writer, md3);
-                            }
+  //                              JsonSerializer ser = new JsonSerializer();
+  //                              ser.Serialize(writer, md3);
+  //                          }
 
-                            playerpointaddition = sb.ToString();
-                            playerpointadditionbool = true;
+  //                          playerpointaddition = sb.ToString();
+  //                          playerpointadditionbool = true;
 
-							visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
-							buildingPos++;
-                        }
+		//					visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+		//					buildingPos++;
+  //                      }
 
-                    }
-                    else
-					{
+  //                  }
+  //                  else
+		//			{
 
-						//if ((foundclues.Count(x => x == Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"))) == 0) && newBuilding == true)
+		//				//if ((foundclues.Count(x => x == Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"))) == 0) && newBuilding == true)
 
-						if ((foundclues.Count(x => x == Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"))) == 0))
-                        {
-                            clue = true;
-                            foundclues[foundcluescounter] = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"));
-                            ++foundcluescounter;
-                            if (GameObject.Find("Clues").GetComponent<Text>().text == "Clues Placeholder")
-                            {
-                                GameObject.Find("Clues").GetComponent<Text>().text = hc.GetComponent<Text>().text.Substring(hc.GetComponent<Text>().text.LastIndexOf(':') + 1);
-                                MyDetail md3 = new MyDetail();
+		//				if ((foundclues.Count(x => x == Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"))) == 0))
+  //                      {
+  //                          clue = true;
+  //                          foundclues[foundcluescounter] = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'"));
+  //                          ++foundcluescounter;
+  //                          if (GameObject.Find("Clues").GetComponent<Text>().text == "Clues Placeholder")
+  //                          {
+  //                              GameObject.Find("Clues").GetComponent<Text>().text = hc.GetComponent<Text>().text.Substring(hc.GetComponent<Text>().text.LastIndexOf(':') + 1);
+  //                              MyDetail md3 = new MyDetail();
 
-								md3.player_id = Convert.ToInt32(ros2.playerid);
+		//						md3.player_id = Convert.ToInt32(ros2.playerid);
                                 
-								if (newBuilding == true) {
+		//						if (newBuilding == true) {
 									
-									md3.point = 10;
+		//							md3.point = 10;
 
-									visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
-									buildingPos++;
+		//							visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+		//							buildingPos++;
 
-								} else {
+		//						} else {
 
-									md3.point = 0;
+		//							md3.point = 0;
 
-								}
+		//						}
 
-								md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
+		//						md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
 
-								score = score + 10; // for local debugging
+		//						score = score + 10; // for local debugging
 
-                                StringBuilder sb = new StringBuilder();
-                                using (StringWriter sw = new StringWriter(sb))
-                                using (JsonTextWriter writer = new JsonTextWriter(sw))
-                                {
-                                    writer.QuoteChar = '\'';
+  //                              StringBuilder sb = new StringBuilder();
+  //                              using (StringWriter sw = new StringWriter(sb))
+  //                              using (JsonTextWriter writer = new JsonTextWriter(sw))
+  //                              {
+  //                                  writer.QuoteChar = '\'';
 
-                                    JsonSerializer ser = new JsonSerializer();
-                                    ser.Serialize(writer, md3);
-                                }
+  //                                  JsonSerializer ser = new JsonSerializer();
+  //                                  ser.Serialize(writer, md3);
+  //                              }
 
-                                playerpointaddition = sb.ToString();
-                                playerpointadditionbool = true;
+  //                              playerpointaddition = sb.ToString();
+  //                              playerpointadditionbool = true;
 
-                            }
-							else 
-                            {
-                                clue = true;
-                                GameObject.Find("Clues").GetComponent<Text>().text = GameObject.Find("Clues").GetComponent<Text>().text + ", " + hc.GetComponent<Text>().text.Substring(hc.GetComponent<Text>().text.LastIndexOf(':') + 1);
-                                MyDetail md3 = new MyDetail();
-								md3.player_id = Convert.ToInt32(ros2.playerid);
+  //                          }
+		//					else 
+  //                          {
+  //                              clue = true;
+  //                              GameObject.Find("Clues").GetComponent<Text>().text = GameObject.Find("Clues").GetComponent<Text>().text + ", " + hc.GetComponent<Text>().text.Substring(hc.GetComponent<Text>().text.LastIndexOf(':') + 1);
+  //                              MyDetail md3 = new MyDetail();
+		//						md3.player_id = Convert.ToInt32(ros2.playerid);
 
-								if (newBuilding == true) {
+		//						if (newBuilding == true) {
 
-									md3.point = 10;
-									score = score + 10; // for local debugging
+		//							md3.point = 10;
+		//							score = score + 10; // for local debugging
 
-									visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
-									buildingPos++;
+		//							visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+		//							buildingPos++;
 
-								} else {
+		//						} else {
 
-									md3.point = 0;
+		//							md3.point = 0;
 
-								}
+		//						}
                                 
-								md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
+		//						md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
 
-                                StringBuilder sb = new StringBuilder();
-                                using (StringWriter sw = new StringWriter(sb))
-                                using (JsonTextWriter writer = new JsonTextWriter(sw))
-                                {
-                                    writer.QuoteChar = '\'';
+  //                              StringBuilder sb = new StringBuilder();
+  //                              using (StringWriter sw = new StringWriter(sb))
+  //                              using (JsonTextWriter writer = new JsonTextWriter(sw))
+  //                              {
+  //                                  writer.QuoteChar = '\'';
 
-                                    JsonSerializer ser = new JsonSerializer();
-                                    ser.Serialize(writer, md3);
-                                }
+  //                                  JsonSerializer ser = new JsonSerializer();
+  //                                  ser.Serialize(writer, md3);
+  //                              }
 
-                                playerpointaddition = sb.ToString();
-                                playerpointadditionbool = true;
-                            }
-                        }
-                    }
+  //                              playerpointaddition = sb.ToString();
+  //                              playerpointadditionbool = true;
+  //                          }
+  //                      }
+  //                  }
 
-                }
-            }
+  //              }
+  //          }
                 
-			if (checkcollision == 1 && clue==false && newBuilding == true)
-            {
-                // Debug.Log("Entered");
-                playerpointadditionbool = true;
-                MyDetail md3 = new MyDetail();
+		//	if (checkcollision == 1 && clue==false && newBuilding == true)
+  //          {
+  //              // Debug.Log("Entered");
+  //              playerpointadditionbool = true;
+  //              MyDetail md3 = new MyDetail();
 
-		        md3.player_id = Convert.ToInt32(ros2.playerid);
-                md3.point = -2;
-                //   md.topic = "/w_ddzcoordinates";
+		//        md3.player_id = Convert.ToInt32(ros2.playerid);
+  //              md3.point = -2;
+  //              //   md.topic = "/w_ddzcoordinates";
 
-		        score = score - 2;
+		//        score = score - 2;
 
-                StringBuilder sb = new StringBuilder();
-                using (StringWriter sw = new StringWriter(sb))
-                using (JsonTextWriter writer = new JsonTextWriter(sw))
-                {
-                    writer.QuoteChar = '\'';
+  //              StringBuilder sb = new StringBuilder();
+  //              using (StringWriter sw = new StringWriter(sb))
+  //              using (JsonTextWriter writer = new JsonTextWriter(sw))
+  //              {
+  //                  writer.QuoteChar = '\'';
 
-                    JsonSerializer ser = new JsonSerializer();
-                    ser.Serialize(writer, md3);
-                }
+  //                  JsonSerializer ser = new JsonSerializer();
+  //                  ser.Serialize(writer, md3);
+  //              }
 
-                playerpointaddition = sb.ToString();
-				visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
-				buildingPos++;
+  //              playerpointaddition = sb.ToString();
+		//		visitedBuildings [buildingPos] = collision.gameObject.GetComponent<Text> ().text;
+		//		buildingPos++;
 
-            }
+  //          }
 				
-        }
+  //      }
 
-		Debug.Log ("A collision, the score is: " + score);
+		//Debug.Log ("A collision, the score is: " + score);
                 
-   }
+  // }
 
 
            
 
-    void OnCollisionExit(Collision collision)
-    {
-        playerpointadditionbool =false;
-        checkcollision=0;
+  //  void OnCollisionExit(Collision collision)
+  //  {
+  //      playerpointadditionbool =false;
+  //      checkcollision=0;
   
-    }
+  //  }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag.Equals("srd"))
+            other = other.GetComponentInParent<MeshCollider>();
+        else if (!other.tag.Equals("building"))
+            return;
 		// Testing the switch to triggers from colliders
 
 		clue = false;
 		newBuilding = true;
 
-		++checkcollision;
+	
 
 		bound_x1 = (other.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.x - other.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.x)*-1;
 		bound_x2 = (other.gameObject.GetComponent<MeshFilter>().mesh.bounds.center.x + other.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.x)*-1;
@@ -422,7 +427,10 @@ public class Person_movement : MonoBehaviour {
 							md3.player_id = Convert.ToInt32(ros2.playerid);
 							md3.point = 10;
 
-							md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
+                            md3.longitude = ros2.convertX;
+                            md3.latitude = ros2.convertY;
+
+                            md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
 
 							score = score + 10; // for local debugging
 
@@ -438,6 +446,8 @@ public class Person_movement : MonoBehaviour {
 
 							playerpointaddition = sb.ToString();
 							playerpointadditionbool = true;
+                            Debug.Log("Sent JSON string: " + playerpointaddition);
+                            Debug.Log("Found Clues");
 
 							visitedBuildings [buildingPos] = other.gameObject.GetComponent<Text> ().text;
 							buildingPos++;
@@ -451,7 +461,10 @@ public class Person_movement : MonoBehaviour {
 							md3.player_id = Convert.ToInt32(ros2.playerid);
 							md3.point = 10;
 
-							md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
+                            md3.longitude = ros2.convertX;
+                            md3.latitude = ros2.convertY;
+
+                            md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
 
 							score = score + 10; // for local debugging
 
@@ -468,7 +481,10 @@ public class Person_movement : MonoBehaviour {
 							playerpointaddition = sb.ToString();
 							playerpointadditionbool = true;
 
-							visitedBuildings [buildingPos] = other.gameObject.GetComponent<Text> ().text;
+                            Debug.Log("Sent JSON string: " + playerpointaddition);
+                            Debug.Log("Found Clues");
+
+                            visitedBuildings [buildingPos] = other.gameObject.GetComponent<Text> ().text;
 							buildingPos++;
 						}
 					}
@@ -477,7 +493,11 @@ public class Person_movement : MonoBehaviour {
 			}
 		}
 
-		if (checkcollision == 1 && clue==false && newBuilding == true)
+        //Debug.Log("checkCollision: " + checkcollision);
+        //Debug.Log("Clue: " + clue);
+        //Debug.Log("newBuilding: " + newBuilding);
+
+        if (clue==false && newBuilding == true)
 		{
 			// Debug.Log("Entered");
 			playerpointadditionbool = true;
@@ -485,9 +505,11 @@ public class Person_movement : MonoBehaviour {
 
 			md3.player_id = Convert.ToInt32(ros2.playerid);
 			md3.point = -2;
-			//   md.topic = "/w_ddzcoordinates";
+			
 
 			score = score - 2;
+
+            Debug.Log("Not a clue");
 
 			StringBuilder sb = new StringBuilder();
 			using (StringWriter sw = new StringWriter(sb))
@@ -505,13 +527,11 @@ public class Person_movement : MonoBehaviour {
 
 		}
 
-     	Debug.Log ("A collision, the score is: " + score);
-        
+        Debug.Log(other.name);
+        Debug.Log("A collisoin, score is: " + score);
 
 
-		// Debug.Log (other.gameObject.tag);
-
-		if (other.gameObject.tag == "hdz")
+        if (other.gameObject.tag == "hdz")
         {
 
 			Debug.Log ("Human danger zone");
@@ -584,8 +604,6 @@ public class Person_movement : MonoBehaviour {
 			*/
 
        	}
-
-		Debug.Log ("HDZ");
        
     }
 
@@ -593,8 +611,12 @@ public class Person_movement : MonoBehaviour {
 
 	private void OnTriggerStay(Collider other)
 	{
+        if (other.tag.Equals("srd"))
+            other = other.GetComponentInParent<MeshCollider>();
+        else if (!other.tag.Equals("building"))
+            return;
 
-		clue = false;
+        clue = false;
 		newBuilding = true;
 
 		++checkcollision;
@@ -637,6 +659,7 @@ public class Person_movement : MonoBehaviour {
 
 						md3.player_id = Convert.ToInt32(ros2.playerid);
 						md3.point = 20;
+                        
 						//   md.topic = "/w_ddzcoordinates";
 
 						StringBuilder sb = new StringBuilder();
@@ -673,6 +696,9 @@ public class Person_movement : MonoBehaviour {
 							md3.player_id = Convert.ToInt32(ros2.playerid);
 							md3.point = 10;
 
+                            md3.longitude = ros2.convertX;
+                            md3.latitude = ros2.convertY;
+
 							md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
 
 							score = score + 10; // for local debugging
@@ -702,7 +728,10 @@ public class Person_movement : MonoBehaviour {
 							md3.player_id = Convert.ToInt32(ros2.playerid);
 							md3.point = 10;
 
-							md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
+                            md3.longitude = ros2.convertX;
+                            md3.latitude = ros2.convertY;
+
+                            md3.drone_clue_id = Convert.ToInt32(getBetween(hc.GetComponent<Text>().text, "\'", "\'")); 
 
 							score = score + 10; // for local debugging
 
@@ -728,6 +757,7 @@ public class Person_movement : MonoBehaviour {
 			}
 		}
 
+       
 		if (checkcollision == 1 && clue==false && newBuilding == true)
 		{
 			// Debug.Log("Entered");
@@ -800,14 +830,14 @@ public class Person_movement : MonoBehaviour {
 
    
 
-    private void OnTriggerExit(Collider other)
-    {
-        playerpointdeductionbool = false; checkhdz =0;
+  //  private void OnTriggerExit(Collider other)
+  //  {
+  //      playerpointdeductionbool = false; checkhdz =0;
 
-		hdzpublisher = false;
+		//hdzpublisher = false;
 
-        //   Debug.Log("exit");
-        //  speed = 5;
-        //  hdz = false;
-    }
+  //      //   Debug.Log("exit");
+  //      //  speed = 5;
+  //      //  hdz = false;
+  //  }
 }

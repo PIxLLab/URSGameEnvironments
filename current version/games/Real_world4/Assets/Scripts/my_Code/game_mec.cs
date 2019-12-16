@@ -37,8 +37,9 @@ public class game_mec : MonoBehaviour
     void Start()
     {
 		
-		string filepath = @"/Users/mishavc/Local_URSWearable/URSGameEnvironments/current version/newsetting/new_mat_version2_1.kml";
-		string filepath2 = @"/Users/mishavc/Local_URSWearable/URSGameEnvironments/current version/newsetting/config.xml";
+		string filepath = @"/Users/longtran/Desktop/setting/new_mat_version2_1.kml";
+		string filepath2 = @"/Users/longtran/Desktop/setting/config.xml";
+
         var format2 = new CultureInfo("en-US").NumberFormat;
 
         format2.NegativeSign = "-";

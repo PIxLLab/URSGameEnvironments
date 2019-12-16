@@ -929,16 +929,7 @@ public class drone : MonoBehaviour {
             check = "ndd";
 
         }
-        if (other.gameObject.CompareTag("hc"))
-        {
-            hcpublisher = false;
-
-        }
-        if (other.gameObject.CompareTag("dc"))
-        {
-            dcpublisher = false;
-
-        }
+       
         if (other.gameObject.CompareTag("building"))
         {
             buipublisher = false;

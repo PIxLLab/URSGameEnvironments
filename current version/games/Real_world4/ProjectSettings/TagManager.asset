@@ -18,6 +18,10 @@ TagManager:
   - fpc
   - dz_max
   - dz_min
+  - counter
+  - Clues
+  - person
+  - srd
   layers:
   - Default
   - TransparentFX
