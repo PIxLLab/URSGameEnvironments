@@ -36,9 +36,20 @@ public class game_mec : MonoBehaviour
 
     void Start()
     {
-		
+
+		//Debug.Log ("RED: Inside game_mec.cs");
+
+		/*
 		string filepath = @"/Users/longtran/Desktop/setting/new_mat_version2_1.kml";
 		string filepath2 = @"/Users/longtran/Desktop/setting/config.xml";
+		*/
+
+		//string filepath = @"/Users/theradbarron/Desktop/PIXLgit/URSGameEnvironments/current version/newsetting/new_mat_version2_1.kml";
+		//string filepath2 = @"/Users/theradbarron/Desktop/PIXLgit/URSGameEnvironments/current version/newsetting/config.xml" ;
+
+		string filepath = @"Assets/XML-KML/new_mat_version2_1.kml";
+		string filepath2 = @"Assets/XML-KML/config.xml";
+
 
         var format2 = new CultureInfo("en-US").NumberFormat;
 
@@ -61,6 +72,7 @@ public class game_mec : MonoBehaviour
             {
 
                 clues[counter] = xn7.InnerText.ToString();
+				//Debug.Log("RED:/CLUES-COUNT-Inner"+xn7.InnerText.ToString());
                 counter++;
 
             }
@@ -125,6 +137,8 @@ public class game_mec : MonoBehaviour
         if (File.Exists(filepath) & count == 0)
         {
 
+			//Debug.Log ("Hello REDWAN!!! KML FILE found");
+
             xmlDoc.Load(filepath);
             XmlNodeList transformList = xmlDoc.GetElementsByTagName("Placemark");
 
@@ -135,6 +149,10 @@ public class game_mec : MonoBehaviour
                 {
 					
                     dcvectors = xn.InnerText.ToString();
+
+					//Debug.Log ("dcvectors: ");
+					//Debug.Log ("dcvectors: " + dcvectors);
+
                     singlevector = dcvectors.Split(null);
 
                     var format = new CultureInfo("en-US").NumberFormat;
@@ -147,6 +165,7 @@ public class game_mec : MonoBehaviour
 					for (int i = 8; i < singlevector.Length-8; ++i)
 					{
 						array = singlevector[i].Split(',');
+						//Debug.Log ("Array[0] /long: " + array[0] + "Array[1]/ lat: " + array[1] + "Array[2]/ altitude: " + array[2] );
 
 
 						longi = float.Parse(array[0], format);
@@ -160,8 +179,12 @@ public class game_mec : MonoBehaviour
 						longid = (longid - oriiginx) * n_x_scale;
 						latd = (latd - oriiginy) * y_scale;
 
+						//Debug.Log ("After Conversion /long: " + longid + "After Conversion /lat:" + latd);
+
 
 						result = new Vector3((float)longid, (float)16, (float)latd);
+
+						//Debug.Log ("result vector: " + result);
 
 						dc[dronecluecounter] = Instantiate(Resources.Load("DC"), result, Quaternion.Euler(90, 0, 0)) as GameObject;
 						dc[dronecluecounter].AddComponent<Text>();

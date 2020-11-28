@@ -69,6 +69,10 @@ public class drone : MonoBehaviour {
 
     void Start() {
 
+
+
+		Debug.Log ("Inside Drone.cs");
+
 		for (int i = 0; i < 10; i++) {
 			found_clues [i] = false;
 		}

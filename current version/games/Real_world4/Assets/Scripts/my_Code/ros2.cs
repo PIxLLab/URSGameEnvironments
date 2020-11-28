@@ -49,7 +49,11 @@ public class ros2 : MonoBehaviour {
     void Awake () {
         // Where the rosbridge instance is running, could be localhost, or some external IP
 
-		string filepath = @"/Users/longtran/Desktop/setting/config.xml";
+		//string filepath = @"/Users/longtran/Desktop/setting/config.xml";
+
+		//string filepath = @"/Users/theradbarron/Desktop/PIXLgit/URSGameEnvironments/current version/newsetting/config.xml";
+
+		string filepath = @"Assets/XML-KML/config.xml";
 
         XmlDocument xmlDoc = new XmlDocument();
         if (File.Exists(filepath))
@@ -58,6 +62,8 @@ public class ros2 : MonoBehaviour {
 
             XmlNodeList transformList = xmlDoc.GetElementsByTagName("Topic");
             number_of_Drones = transformList.Count;
+
+			//Debug.Log("RED:/Number of Drone" +number_of_Drones.ToString());
             
             Message_Topics = new string[number_of_Drones];
             drones = new drone[number_of_Drones];
