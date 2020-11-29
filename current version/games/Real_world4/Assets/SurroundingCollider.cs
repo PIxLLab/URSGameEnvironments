@@ -23,7 +23,7 @@ public class SurroundingCollider : MonoBehaviour
 
             if (v.y > 1 && !verticies.Contains(new Vector3(-v.x, v.y, -v.z)))
             {
-                Debug.Log("Added");
+//                Debug.Log("Added");
                 Vector3 theVector = new Vector3(-v.x, v.y, -v.z);
                 verticies.Add(theVector);
             }

@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using Assets.Scripts;
 using System.Text;
 using System.IO;
+using System.Xml;
 
 public class drone : MonoBehaviour {
 
@@ -39,7 +40,9 @@ public class drone : MonoBehaviour {
     public static string drone_clue_value;
     public static string building_numbers;
 
-	bool[] found_clues = new bool[10];
+	//bool[] found_clues = new bool[10];
+
+	bool[] found_clues;
 	int clue_id;
     
 
@@ -69,11 +72,32 @@ public class drone : MonoBehaviour {
 
     void Start() {
 
+		//Debug.Log ("Inside Drone.cs");
 
+		string filepath = @"Assets/XML-KML/config.xml";
+		XmlDocument xmlDoc = new XmlDocument();
 
-		Debug.Log ("Inside Drone.cs");
+		int hcounter = 0, counter = 0; 
+		string[] clues; string[] Hclues;
 
-		for (int i = 0; i < 10; i++) {
+		if (File.Exists (filepath)) 
+		{
+			xmlDoc.Load(filepath);
+
+			XmlNodeList transformList7 = xmlDoc.GetElementsByTagName("clue");
+			XmlNodeList transformList8 = xmlDoc.GetElementsByTagName("Hclue");
+
+			counter = transformList7.Count;
+			hcounter = transformList8.Count;
+
+			//Debug.Log ("RED/HC Count: " + transformList7.Count.ToString());
+			//Debug.Log ("RED/DC Count: " + transformList8.Count.ToString());
+		}
+			
+		found_clues = new bool[counter + hcounter];
+
+		for (int i = 0; i < (counter+ hcounter); i++) {
+			Debug.Log (i);
 			found_clues [i] = false;
 		}
         
