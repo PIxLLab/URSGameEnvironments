@@ -97,7 +97,7 @@ public class drone : MonoBehaviour {
 		found_clues = new bool[counter + hcounter];
 
 		for (int i = 0; i < (counter+ hcounter); i++) {
-			Debug.Log (i);
+			//Debug.Log (i);
 			found_clues [i] = false;
 		}
         
